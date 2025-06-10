@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meal Payment System</title>
+  <style>
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(#e0f7fa, #ffffff); 
+      margin: 0; 
+      padding: 0; 
+    }
+    header, footer {
+      background: linear-gradient(90deg, #1abc9c, #3498db);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-bottom: 5px solid #2980b9;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .home-button {
+      background-color: #1abc9c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .home-button:hover {
+      background-color: #16a085;
+    }
+
+    .container { padding: 20px; max-width: 900px; margin: auto; }
+    .payment-card { background: white; padding: 30px; margin: 20px 0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2, h3 { color: #2c3e50; margin-top: 0; }
+    .meal-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .meal-details { flex: 2; }
+    .meal-price {
+      flex: 1;
+      text-align: right;
+      font-weight: bold;
+      color: #16a085;
+      font-size: 1.2em;
+    }
+    .form-group { margin: 20px 0; }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #34495e;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .card-icons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .card-icon {
+      width: 40px;
+      height: 25px;
+      background-color: #f5f5f5;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #555;
+    }
+    .row { display: flex; gap: 20px; }
+    .col { flex: 1; }
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+    button:hover { background-color: #2980b9; }
+    .secure-payment {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      color: #27ae60;
+      font-size: 14px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #3498db;
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .confirmation {
+      text-align: center;
+      padding: 30px 0;
+    }
+    .confirmation-icon {
+      font-size: 60px;
+      color: #2ecc71;
+      margin-bottom: 20px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Meal Payment System</h1>
+    <!-- Home button in header -->
+    <a href="K&I prototype system.html" class="home-button">🏠 Home</a>
+  </header>
+
+  <div class="container">
+    <!-- Payment Form -->
+    <div id="paymentForm">
+      <div class="payment-card">
+        <h2>Complete Your Payment</h2>
+
+        <div class="meal-info">
+          <div class="meal-details">
+            <h3 id="selectedMeal">Spaghetti</h3>
+            <p>Pre-order for: <span id="selectedDate">Today, June 15</span></p>
+          </div>
+          <div class="meal-price" id="selectedPrice">RM12.90</div>
+        </div>
+
+        <form id="paymentDetails">
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            <div class="card-icons">
+              <div class="card-icon">VISA</div>
+              <div class="card-icon">MC</div>
+              <div class="card-icon">AMEX</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" placeholder="123" maxlength="4" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nameOnCard">Name on Card</label>
+            <input type="text" id="nameOnCard" placeholder="John Doe" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email for Receipt</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+
+          <div class="secure-payment">
+            <span>🔒</span>
+            <span>Secure payment encrypted</span>
+          </div>
+
+          <button type="button" onclick="processPayment()">Pay</button>
+          <a href="index.html" class="back-link">← Back to Home</a>
+        </form>
+      </div>
+    </div>
+
+    <!-- Confirmation Screen -->
+    <div id="confirmationScreen" class="hidden">
+      <div class="payment-card confirmation">
+        <div class="confirmation-icon">✓</div>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your order.</p>
+        <p>Your <strong id="confirmedMeal">Spaghetti</strong> meal for <strong id="confirmedDate">Today, June 15</strong> has been confirmed.</p>
+        <p>Amount paid: <strong id="confirmedPrice">RM12.90</strong></p>
+        <p>A receipt has been sent to <strong id="confirmedEmail">your@email.com</strong></p>
+        <button onclick="window.location.href='index.html'">Back to Menu</button>
+        <a href="index.html" class="home-button">🏠 Home</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Smart Meal System</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const meal = urlParams.get('meal');
+      const price = urlParams.get('price');
+      const date = urlParams.get('date') || 'Today';
+
+      if (meal && price) {
+        document.getElementById('selectedMeal').textContent = meal;
+        document.getElementById('selectedPrice').textContent = 'RM' + price;
+        document.getElementById('confirmedMeal').textContent = meal;
+        document.getElementById('confirmedPrice').textContent = 'RM' + price;
+
+        const formattedDate = formatDate(date);
+        document.getElementById('selectedDate').textContent = formattedDate;
+        document.getElementById('confirmedDate').textContent = formattedDate;
+      }
+
+      document.getElementById('cardNumber').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\s+/g, '');
+        if (value.length > 0) {
+          value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+        }
+        e.target.value = value;
+      });
+
+      document.getElementById('expiryDate').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 2) {
+          value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+      });
+    });
+
+    function formatDate(dateString) {
+      if (dateString === 'Today') {
+        const today = new Date();
+        return 'Today, ' + today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      } else if (dateString === 'Tomorrow') {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return 'Tomorrow, ' + tomorrow.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      }
+      return dateString;
+    }
+
+    function processPayment() {
+      const cardNumber = document.getElementById('cardNumber').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+      const cvv = document.getElementById('cvv').value;
+      const nameOnCard = document.getElementById('nameOnCard').value;
+      const email = document.getElementById('email').value;
+
+      if (!cardNumber || !expiryDate || !cvv || !nameOnCard || !email) {
+        alert('Please fill in all payment details');
+        return;
+      }
+
+      if (cardNumber.replace(/\s/g, '').length < 16) {
+        alert('Please enter a valid card number');
+        return;
+      }
+
+      if (!email.includes('@')) {
+        alert('Please enter a valid email address');
+        return;
+      }
+
+      document.getElementById('confirmedEmail').textContent = email;
+      document.getElementById('paymentForm').classList.add('hidden');
+      document.getElementById('confirmationScreen').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
